@@ -7,344 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ink: #1a1410;
-      --paper: #f5f0e8;
-      --cream: #ede7d8;
-      --rust: #9b4a2b;
-      --gold: #c8973a;
-      --muted: #7a6f63;
-      --rule: #c9bfad;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ── Grain overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* ── Header ── */
-    header {
-      padding: 4rem 6vw 3rem;
-      border-bottom: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 2rem;
-      animation: fadeUp 0.9s ease both;
-    }
-
-    .header-left h1 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--ink);
-    }
-
-    .header-left h1 em {
-      font-style: italic;
-      color: var(--rust);
-    }
-
-    .header-left .tagline {
-      margin-top: 0.6rem;
-      font-size: 1rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-    }
-
-    .header-right {
-      text-align: right;
-    }
-
-    .header-right a {
-      display: block;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-      margin-bottom: 0.3rem;
-    }
-
-    .header-right a:hover { color: var(--rust); }
-
-    /* ── Decorative rule ── */
-    .ornament {
-      text-align: center;
-      padding: 1.2rem 0;
-      color: var(--rule);
-      font-size: 1.1rem;
-      letter-spacing: 0.5em;
-      animation: fadeUp 1s 0.15s ease both;
-    }
-
-    /* ── Filter bar ── */
-    .filter-bar {
-      padding: 1.4rem 6vw;
-      border-bottom: 1px solid var(--rule);
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      animation: fadeUp 1s 0.25s ease both;
-    }
-
-    .filter-btn {
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 0.3rem 0.9rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      border-radius: 0;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--paper);
-    }
-
-    /* ── Main layout ── */
-    main {
-      padding: 3rem 6vw 6rem;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-
-    /* ── Section heading ── */
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2rem;
-      padding-bottom: 0.7rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    /* ── Articles grid ── */
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 0;
-    }
-
-    /* ── Article card ── */
-    .article-card {
-      padding: 2.2rem 2rem 2rem;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.25s;
-      animation: fadeUp 0.7s ease both;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .article-card:nth-child(1) { animation-delay: 0.1s; }
-    .article-card:nth-child(2) { animation-delay: 0.18s; }
-    .article-card:nth-child(3) { animation-delay: 0.26s; }
-    .article-card:nth-child(4) { animation-delay: 0.34s; }
-    .article-card:nth-child(5) { animation-delay: 0.42s; }
-    .article-card:nth-child(6) { animation-delay: 0.50s; }
-
-    /* Remove right border on last in row — handled with JS fallback via CSS */
-    .article-card:hover {
-      background: var(--cream);
-    }
-
-    .card-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.9rem;
-      display: flex;
-      gap: 0.8rem;
-      align-items: center;
-    }
-
-    .card-meta .dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: var(--rule);
-      flex-shrink: 0;
-    }
-
-    .card-tag {
-      color: var(--rust);
-    }
-
-    .card-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.22rem;
-      font-weight: 600;
-      line-height: 1.3;
-      color: var(--ink);
-      margin-bottom: 0.8rem;
-    }
-
-    .card-excerpt {
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.65;
-      flex-grow: 1;
-    }
-
-    .card-link {
-      margin-top: 1.4rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--rust);
-      text-decoration: none;
-      transition: gap 0.2s;
-    }
-
-    .card-link:hover { gap: 0.85rem; }
-
-    .card-link svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      flex-shrink: 0;
-    }
-
-    /* ── Featured article (spans 2 cols) ── */
-    .article-card.featured {
-      grid-column: span 2;
-      background: var(--cream);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding: 3rem;
-      border-left: 3px solid var(--rust);
-    }
-
-    .article-card.featured .card-title {
-      font-size: 1.7rem;
-      grid-column: 1;
-    }
-
-    .article-card.featured .card-excerpt {
-      font-size: 1rem;
-      grid-column: 2;
-      align-self: center;
-    }
-
-    .article-card.featured .card-meta { grid-column: 1 / -1; }
-    .article-card.featured .card-link { grid-column: 1; }
-
-    /* ── About strip ── */
-    .about-strip {
-      margin-top: 5rem;
-      padding: 3rem;
-      border: 1px solid var(--rule);
-    }
-
-    .about-text p {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--muted);
-    }
-
-    .about-text p + p { margin-top: 0.8rem; }
-
-    /* ── Footer ── */
-    footer {
-      padding: 2rem 6vw;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    footer p {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--rule);
-    }
-
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    footer a:hover { color: var(--rust); }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Hidden cards (filtering) ── */
-    .article-card.hidden {
-      display: none;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 700px) {
-      header { grid-template-columns: 1fr; }
-      .header-right { text-align: left; display: flex; gap: 1rem; }
-      .article-card.featured {
-        grid-column: span 1;
-        grid-template-columns: 1fr;
-      }
-      .article-card.featured .card-title,
-      .article-card.featured .card-excerpt,
-      .article-card.featured .card-link { grid-column: 1; }
-
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
@@ -354,7 +17,7 @@
     <p class="tagline">Writing Portfolio</p>
   </div>
   <div class="header-right">
-    <a href="mailto:">Contact</a>
+    <a href="mailto:hello@elizabethchaynes.com">Contact</a>
     <a href="https://github.com/elizabethchaynes" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
@@ -383,9 +46,9 @@
         <span class="dot"></span>
         <span>Month Year</span>
       </div>
-      <h2 class="card-title">The Title of Your Most Important Essay Goes Right Here</h2>
-      <p class="card-excerpt">A sentence or two describing what this piece is about — the central argument, the emotional territory, why it matters. Keep it short enough to intrigue, long enough to give a taste.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <h2 class="card-title">The Title of Your Most Important Piece Goes Right Here</h2>
+      <p class="card-excerpt">A sentence or two describing what this piece is about — the scope, the audience, why it matters. Keep it short enough to intrigue, long enough to give a taste.</p>
+      <a class="card-link" href="api-docs/piece-title.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -396,13 +59,13 @@
       <div class="card-meta">
         <span class="card-tag">End User Docs</span>
         <span class="dot"></span>
-        <span>Publication</span>
+        <span>Company</span>
         <span class="dot"></span>
         <span>Year</span>
       </div>
-      <h2 class="card-title">End User Doc Title: A Compelling Piece of Reported Writing</h2>
-      <p class="card-excerpt">Brief description of the reporting, the people involved, and what makes this story worth reading.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <h2 class="card-title">End User Doc Title: A Step-by-Step Guide</h2>
+      <p class="card-excerpt">Brief description of what the doc covers and who it's for.</p>
+      <a class="card-link" href="end-user-docs/piece-title.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -412,13 +75,13 @@
       <div class="card-meta">
         <span class="card-tag">MarCom</span>
         <span class="dot"></span>
-        <span>Publication</span>
+        <span>Company</span>
         <span class="dot"></span>
         <span>Year</span>
       </div>
-      <h2 class="card-title">MarCom Piece: A Review or Cultural Critique Title</h2>
-      <p class="card-excerpt">Short description of the subject under review and the angle you took — what you argued, what you loved, or why it mattered.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <h2 class="card-title">MarCom Piece Title</h2>
+      <p class="card-excerpt">Short description of the deliverable — campaign copy, white paper, product narrative, etc.</p>
+      <a class="card-link" href="marcom/piece-title.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -428,13 +91,13 @@
       <div class="card-meta">
         <span class="card-tag">SOPs</span>
         <span class="dot"></span>
-        <span>Publication</span>
+        <span>Company</span>
         <span class="dot"></span>
         <span>Year</span>
       </div>
-      <h2 class="card-title">SOP Title: Investigation or In-Depth News Piece</h2>
-      <p class="card-excerpt">A quick note on what you uncovered, who you spoke to, and the impact or response the piece generated.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <h2 class="card-title">SOP Title: Procedure or Process Document</h2>
+      <p class="card-excerpt">What process this SOP governs and the context in which it was written.</p>
+      <a class="card-link" href="sops/piece-title.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -444,13 +107,13 @@
       <div class="card-meta">
         <span class="card-tag">API Docs</span>
         <span class="dot"></span>
-        <span>Publication</span>
+        <span>Company</span>
         <span class="dot"></span>
         <span>Year</span>
       </div>
-      <h2 class="card-title">API Doc Title or Opinion Piece with a Strong, Specific Title</h2>
-      <p class="card-excerpt">What is this piece about at its core? A sentence that gives the reader a reason to click.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <h2 class="card-title">Another API Doc: Reference Guide or Integration Tutorial</h2>
+      <p class="card-excerpt">What the doc covers and what a developer can accomplish after reading it.</p>
+      <a class="card-link" href="api-docs/another-piece.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -460,13 +123,13 @@
       <div class="card-meta">
         <span class="card-tag">End User Docs</span>
         <span class="dot"></span>
-        <span>Publication</span>
+        <span>Company</span>
         <span class="dot"></span>
         <span>Year</span>
       </div>
-      <h2 class="card-title">Another End User Doc: Step-by-Step Guide or How-To</h2>
+      <h2 class="card-title">Another End User Doc: Getting Started or How-To</h2>
       <p class="card-excerpt">The document's purpose in a sentence — what the user learns or can do after reading it.</p>
-      <a class="card-link" href="#" target="_blank" rel="noopener">
+      <a class="card-link" href="end-user-docs/another-piece.html">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -490,7 +153,6 @@
 </footer>
 
 <script>
-  // Filter logic
   const buttons = document.querySelectorAll('.filter-btn');
   const cards   = document.querySelectorAll('.article-card');
 
