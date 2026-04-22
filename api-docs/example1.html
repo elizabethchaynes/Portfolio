@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example API Docs</title>
+  <title>Aggregate Statistics on PHI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -32,9 +32,9 @@
     <span>Year</span>
   </div>
   <!-- Update title -->
-  <h1>API Docs - Example 1</h1>
+  <h1>Aggregate Statistics on PHI</h1>
   <!-- Optional: a one-sentence intro or subtitle -->
-  <p class="lede">This is my summary about what this page is about.</p>
+  <p class="lede">We can use the Identify PHI endpoint to identify PHI that we would like to aggregate, and then build a DataFrame to print each type of PHI (labeled as phi_type or category) and how often it was found. We can use this information to understand the frequency and types of PHI that appear in various conversations or documents.</p>
 </div>
 
 <!-- ── Piece body ── -->
@@ -43,23 +43,20 @@
   <!-- Paste or write your content below. -->
   <!-- Available elements: p, h2, h3, ul, ol, blockquote, code, pre>code -->
 
-  <p>#Aggregate Statistics on PHI
-We can use the Identify PHI endpoint to identify PHI that we would like to aggregate, and then build a DataFrame to print each type of PHI (labeled as phi_type or category) and how often it was found. We can use this information to understand the frequency and types of PHI that appear in various conversations or documents.
-Click here to learn more about the phi_type and category labels.
-
-##Step 1: Install ScienceIO and Pandas
+<h1>Step 1: Install ScienceIO and Pandas</h1>
 ⚠️  Important: Make sure you are using the latest version of the SDK; the endpoint will not work on versions prior to 2.0.0. Use the pip install scienceio --upgrade command to upgrade.
 Use this code if you do not have pandas and ScienceIO installed on your machine, or if you are starting a new Jupyter notebook. Otherwise, skip to Step 2.
-```
+
+<pre><code>
 # Install scienceio and pandas
 pip install scienceio
 pip install pandas
-```
+</code></pre>
 
-##Step 2: Call the Identify PHI Endpoint
+<h1>Step 2: Call the Identify PHI Endpoint</h1>
 You will need to import and set up the ScienceIO library and pandas (under the pd alias) to successfully run the code. You can replace the strings in clinical_notes with your own strings, if desired.
 
-```
+<pre><code>
 # Import and set up required packages
 from scienceio import ScienceIO
 scio = ScienceIO()
@@ -80,36 +77,37 @@ responses = []
 for text in clinical_notes:
     response = scio.identify_phi(text)
     responses.append(response)
-```
+</code></pre>
 
-##Step 3: Build the DataFrame
+<h1>Step 3: Build the DataFrame</h1>
 First, we’ll use the json_normalize function to create a DataFrame with a tabular format. This function will loop to build multiple DataFrames containing the endpoint responses for each clinical note, and then will combine all of those separate DataFrames into a df_list variable.
-```
+
+<pre><code> 
 # Use the json_normalize function to create multiple dfs with a tabular format
 import pandas as pd
 df_list = []
 for idx, response in enumerate(responses):
     df = pd.json_normalize(response['annotations'])
     df_list.append(df)
-```
+</code></pre>
 
 Next, we’ll build the dataframe so that we can see the PHI that was identified, including the phi_type and category labels.
-```
+<pre><code> 
 # Build the df and view the results
 for idx, response in enumerate(responses):
   print(f"Note {idx + 1}:\n{clinical_notes[idx]}\n")
   df = pd.json_normalize(response['annotations'])
   display(df)
   print("-" * 50)
-```
+</code></pre>
 
 The result looks like this (image truncated due to length):
 <ADD IMAGE>
  
-##Step 4: Aggregate and View Statistics
+<h1>Step 4: Aggregate and View Statistics</h1>
 Finally, we’ll aggregate the statistics into a single DataFrame and print both the phi_type and category labels. This will show us the total count of each, found in all of the clinical notes.
 
-```
+<pre><code>
 # Aggregate statistics into a single df
 combined_df = pd.concat(df_list)
 
@@ -121,50 +119,14 @@ print("-" * 50)
 # Print category labels found:
 print("Categories across all clinical notes")
 print(combined_df["labels.category.label"].value_counts())
-```
+</code></pre>
+
 The result looks like this:
-`` .</p>
-
-  <h2>A Section Heading</h2>
-
-  <p>Use <code>&lt;h2&gt;</code> for major sections and <code>&lt;h3&gt;</code> for sub-sections. Both are already styled to match the portfolio aesthetic.</p>
-
-  <h3>A Sub-section</h3>
-
-  <p>Sub-sections use the small monospace uppercase style, which works well for steps, parameters, or named procedures.</p>
-
-  <p>For a bulleted list:</p>
-  <ul>
-    <li>First item</li>
-    <li>Second item</li>
-    <li>Third item</li>
-  </ul>
-
-  <p>For a numbered list:</p>
-  <ol>
-    <li>Step one</li>
-    <li>Step two</li>
-    <li>Step three</li>
-  </ol>
-
-  <p>For a pull quote or callout:</p>
-  <blockquote>
-    This is a blockquote. Use it for important callouts, notes, or quoted material.
-  </blockquote>
-
-  <p>For inline code, use <code>backtick-style</code> tags. For a full code block:</p>
-
-  <pre><code>GET /v1/endpoint HTTP/1.1
-Host: api.example.com
-Authorization: Bearer {token}
-Content-Type: application/json</code></pre>
-
-  <p>Continue your content here as needed.</p>
-
+<ADD IMAGE>
 </main>
 
 <footer>
-  <p>Elizabeth C. Haynes &mdash; Writing Portfolio</p>
+  <p>Elizabeth C. Haynes &mdash; Technical Writing Portfolio</p>
   <p>
     <a href="../index.html">Back to all writing</a>
   </p>
