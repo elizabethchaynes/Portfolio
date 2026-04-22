@@ -43,12 +43,12 @@
   <!-- Paste or write your content below. -->
   <!-- Available elements: p, h2, h3, ul, ol, blockquote, code, pre>code -->
 
-<p>We can use the Identify PHI endpoint to identify PHI that we would like to aggregate, and then build a DataFrame to print each type of PHI (labeled as phi_type or category) and how often it was found. We can use this information to understand the frequency and types of PHI that appear in various conversations or documents.
+<p>We can use the Identify PHI endpoint to identify PHI that we would like to aggregate, and then build a DataFrame to print each type of PHI (labeled as <code>phi_type</code> or <code>category</code>) and how often it was found. We can use this information to understand the frequency and types of PHI that appear in various conversations or documents.
 </p>
 
 <h1>Step 1: Install ScienceIO and Pandas</h1>
-⚠️  Important: Make sure you are using the latest version of the SDK; the endpoint will not work on versions prior to 2.0.0. Use the `pip install scienceio --upgrade` command to upgrade.
-<br>Use this code if you do not have pandas and ScienceIO installed on your machine, or if you are starting a new Jupyter notebook. Otherwise, skip to Step 2.
+⚠️  Important: Make sure you are using the latest version of the SDK; the endpoint will not work on versions prior to 2.0.0. Use the <code>pip install scienceio --upgrade</code>code> command to upgrade.
+<br><br>Use this code if you do not have pandas and ScienceIO installed on your machine, or if you are starting a new Jupyter notebook. Otherwise, skip to Step 2.
 
 <pre><code>
 # Install scienceio and pandas
@@ -57,7 +57,7 @@ pip install pandas
 </code></pre>
 
 <h1>Step 2: Call the Identify PHI Endpoint</h1>
-You will need to import and set up the ScienceIO library and pandas (under the pd alias) to successfully run the code. You can replace the strings in clinical_notes with your own strings, if desired.
+You will need to import and set up the ScienceIO library and pandas (under the <code>pd</code> alias) to successfully run the code. You can replace the strings in <code>clinical_notes</code> with your own strings, if desired.
 
 <pre><code>
 # Import and set up required packages
@@ -83,7 +83,7 @@ for text in clinical_notes:
 </code></pre>
 
 <h1>Step 3: Build the DataFrame</h1>
-First, we’ll use the json_normalize function to create a DataFrame with a tabular format. This function will loop to build multiple DataFrames containing the endpoint responses for each clinical note, and then will combine all of those separate DataFrames into a df_list variable.
+First, we’ll use the <code>json_normalize</code> function to create a DataFrame with a tabular format. This function will loop to build multiple DataFrames containing the endpoint responses for each clinical note, and then will combine all of those separate DataFrames into a <code>df_list</code> variable.
 
 <pre><code> 
 # Use the json_normalize function to create multiple dfs with a tabular format
@@ -108,7 +108,7 @@ The result looks like this (image truncated due to length):
 <img src="../images/aggregate1.png" alt="Results for Step 3." />
  
 <h1>Step 4: Aggregate and View Statistics</h1>
-Finally, we’ll aggregate the statistics into a single DataFrame and print both the phi_type and category labels. This will show us the total count of each, found in all of the clinical notes.
+Finally, we’ll aggregate the statistics into a single DataFrame and print both the <code>phi_type</code> and <code>category</code> labels. This will show us the total count of each, found in all of the clinical notes.
 
 <pre><code>
 # Aggregate statistics into a single df
