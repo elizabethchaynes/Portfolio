@@ -29,7 +29,7 @@
   <button class="filter-btn" data-filter="api-docs">API Docs</button>
   <button class="filter-btn" data-filter="end-user-docs">End User Docs</button>
   <button class="filter-btn" data-filter="sops">SOPs</button>
-  <button class="filter-btn" data-filter="marcom">All Other Types</button>
+  <a class="filter-btn" href="https://elizabethchaynes.com/samples/" target="_blank" rel="noopener">All Other Types</a>
 </div>
 
 <main>
@@ -66,22 +66,6 @@
       <h2 class="card-title">End User Doc Title: A Step-by-Step Guide</h2>
       <p class="card-excerpt">Brief description of what the doc covers and who it's for.</p>
       <a class="card-link" href="end-user-docs/example1.html">
-        Read the piece
-        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </article>
-
-    <article class="article-card" data-category="marcom">
-      <div class="card-meta">
-        <span class="card-tag">All Other Types</span>
-        <span class="dot"></span>
-        <span>Company</span>
-        <span class="dot"></span>
-        <span>Year</span>
-      </div>
-      <h2 class="card-title">MarCom Piece Title</h2>
-      <p class="card-excerpt">Short description of the deliverable — campaign copy, white paper, product narrative, etc.</p>
-      <a class="card-link" href="https://elizabethchaynes.com/samples/" target="_blank" rel="noopener">
         Read the piece
         <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -153,7 +137,7 @@
 </footer>
 
 <script>
-  const buttons = document.querySelectorAll('.filter-btn');
+  const buttons = document.querySelectorAll('.filter-btn[data-filter]');
   const cards   = document.querySelectorAll('.article-card');
 
   buttons.forEach(btn => {
