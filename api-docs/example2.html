@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full PHI Redaction for Multiple Clinical Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <!-- NOTE: adjust the path below depending on which subfolder this file lives in -->
+  <!-- From api-docs/, end-user-docs/, marcom/, or sops/ → use ../css/styles.css  -->
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+<!-- ── Back navigation ── -->
+<nav class="piece-nav">
+  <a class="back-link" href="../index.html">
+    <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    All writing
+  </a>
+</nav>
+
+<!-- ── Piece header ── -->
+<div class="piece-header">
+  <div class="card-meta">
+    <!-- Update category, company, and year -->
+    <span class="card-tag">API Docs</span>
+    <span class="dot"></span>
+    <span>ScienceIO</span>
+    <span class="dot"></span>
+    <span>Sample</span>
+  </div>
+  <!-- Update title -->
+  <h1>Full PHI Redaction for Multiple Clinical Notes</h1>
+  <!-- Optional: a one-sentence intro or subtitle -->
+  <p class="lede">Redact the PHI from a set of five clinical notes and display the results in two different ways.</p>
+</div>
+
+<!-- ── Piece body ── -->
+<main class="piece-body">
+
+  <!-- Paste or write your content below. -->
+  <!-- Available elements: p, h2, h3, ul, ol, blockquote, code, pre>code -->
+
+<p>You can redact protected health information (PHI) from as many clinical notes as you wish, up to a maximum of 10,000 characters per API call. In this example, we will redact the PHI from a set of five clinical notes and display the results in two different ways.
+</p>
+
+<h1>Step 1: Install ScienceIO and Pandas</h1>
+⚠️  Important: Make sure you are using the latest version of the SDK; the endpoint will not work on versions prior to 2.0.0. Use the <code>pip install scienceio --upgrade</code> command to upgrade.
+<br><br>Use this code if you do not have pandas and ScienceIO installed on your machine, or if you are starting a new Jupyter notebook. Otherwise, skip to Step 2.
+
+<pre><code>
+# Install scienceio and pandas
+pip install scienceio
+pip install pandas
+</code></pre>
+
+<h1>Step 2: Call the Redact PHI Endpoint</h1>
+You will need to import and set up the ScienceIO library and pandas (under the <code>pd</code> alias) to successfully run the code. You can replace the strings in <code>clinical_notes</code> with your own strings, if desired.
+
+<pre><code>
+# Import and set up required packages
+from scienceio import ScienceIO
+scio = ScienceIO()
+import pandas as pd
+
+# Provide the clinical notes with unredacted PHI
+clinical_notes = [
+    "Patient: Jack Ryan, Address: 789 Blue Ridge Parkway, Arlington, VA 22202, Phone: 917-235-2351, Date of birth: 05/15/1972",
+    "Dr. Robert House consulted on the case.",
+    "Amy Smith had gallbladder surgery on 8/12/2022 and will follow up with Dr. Riley in 6 weeks.",
+    "Hospital: St. Mary's Hospital, San Francisco, CA, Admission Date: 04/15/2020",
+    "Medical Record Number: 311612351634, Diagnosis: Hypertension"
+]
+
+# Loop through each note and call the Redact PHI endpoint
+redacted_responses = []
+
+for text in clinical_notes:
+    response = scio.redact_phi(text)
+    redacted_responses.append(response)
+</code></pre>
+
+<h1>Step 3: View the Results</h1>
+<h2>Option 1: Create an Ordered List</h2>
+In this option, we will look at the index of each clinical note, display the redacted notes in their original order, and include the original note as a reference.
+
+<pre><code> 
+# Display redacted notes alongside originals, in original order
+for idx, response in enumerate(redacted_responses):
+    print(f"Original Note {idx + 1}:\n{clinical_notes[idx]}\n")
+    print(f"Redacted Note {idx + 1}:\n{response['output_text']}\n")
+    print('-' * 50)
+</code></pre>
+
+The result looks like this
+<image>ADDIMAGE</image>
+
+<h2>Option 2: Use a DataFrame to Create a Table</h2>
+
+In this option, we will use the json_normalize function to display the results in a tabular format, and show each redacted clinical note in its original order along with a table that includes full details for the PHI redaction.
+
+<pre><code>
+# Display redacted notes in order, with a full table for PHI
+for idx, response in enumerate(redacted_responses):
+    print(f"Redactions for Note {idx + 1}:\n", response["output_text"])
+    
+    df = pd.json_normalize(response['annotations'])
+    display(df)
+    print('-' * 50)
+</code></pre>
+
+The result looks like this (image truncated due to length):
+<image>ADDIMAGE</image>
+
+</main>
+
+<footer>
+  <p>Elizabeth C. Haynes &mdash; Technical Writing Portfolio</p>
+  <p>
+    <a href="../index.html">Back to all writing</a>
+  </p>
+</footer>
+
+</body>
+</html>
