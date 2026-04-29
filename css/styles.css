@@ -174,7 +174,7 @@ main {
 
 .card-meta {
   font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -415,7 +415,7 @@ footer a:hover { color: var(--rust); }
 
 .piece-body code {
   font-family: 'DM Mono', monospace;
-  font-size: 0.65em;
+  font-size: 0.75em;
   background: var(--cream);
   padding: 0.15em 0.4em;
   border: 1px solid var(--rule);
